@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +18,8 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
+      - name: Accept Android licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
       - uses: gradle/actions/setup-gradle@v4
         with:
@@ -32,4 +33,3 @@ jobs:
         with:
           name: CallBlocker-debug-apk
           path: CallBlocker/app/build/outputs/apk/debug/app-debug.apk
-        
